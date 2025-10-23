@@ -1,15 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Staff Check-In/Out</title>
-</head>
-<body>
-    <h1>Check In / Check Out</h1>
+{% extends "attendance/base.html" %}
+{% block title %}Check In / Check Out{% endblock %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+{% block content %}
+  <section class="card form-card">
+    <h1>Staff Check In / Check Out</h1>
+
+    <form method="post" class="simple-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="form-row">
+        <label for="{{ form.staff.id_for_label }}">Staff</label>
+        {{ form.staff }}
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Submit</button>
+        <a class="btn btn-ghost" href="{% url 'attendance_home' %}">Cancel</a>
+      </div>
     </form>
-</body>
-</html>
+  </section>
+{% endblock %}
