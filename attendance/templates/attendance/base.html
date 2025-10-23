@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Attendance{% endblock %} — Attendance System</title>
+  <link rel="stylesheet" href="{% static 'attendance/css/attendance.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'attendance_home' %}">Attendance</a>
+
+      <button id="nav-toggle" class="nav-toggle" aria-expanded="false" aria-controls="site-nav">☰</button>
+
+      <nav id="site-nav" class="site-nav" role="navigation">
+        <ul>
+          <li><a href="{% url 'attendance_home' %}">Home</a></li>
+          <li><a href="{% url 'task_list' %}">Tasks</a></li>
+          <li><a href="{% url 'staff_check' %}">Check In / Out</a></li>
+          <li><a href="{% url 'admin:index' %}">Admin</a></li>
+          {% if user.is_authenticated %}
+            <li class="muted">Hi, {{ user.get_full_name|default:user.username }}</li>
+            <li><a href="{% url 'logout' %}?next={% url 'attendance_home' %}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© {{ now.year }} Attendance System</small>
+    </div>
+  </footer>
+
+  <script src="{% static 'attendance/js/attendance.js' %}"></script>
+</body>
+</html>
