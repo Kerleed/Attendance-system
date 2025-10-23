@@ -1,68 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            padding: 30px;
-        }
-        .dashboard {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .stat {
-            background: #e9f0ff;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #eee;
-        }
-    </style>
-</head>
-<body>
-    <div class="dashboard">
-        <h1>Admin Dashboard</h1>
-        <p><strong>Date:</strong> {{ today }}</p>
+{% extends "attendance/base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
 
-        <div class="stats">
-            <div class="stat"><strong>Total Staff:</strong> {{ total_staff }}</div>
-            <div class="stat"><strong>Present Staff:</strong> {{ present_staff }}</div>
-            <div class="stat"><strong>Absent Staff:</strong> {{ absent_staff }}</div>
-            <div class="stat"><strong>Total Hours Worked:</strong> {{ total_hours_worked }}</div>
-            <div class="stat"><strong>Late Staff:</strong> {{ late_staff }}</div>
-            <div class="stat"><strong>Early Leavers:</strong> {{ early_leavers }}</div>
-        </div>
+{% block content %}
+  <section class="card">
+    <h1>Admin Dashboard</h1>
 
-        <h2>Today's Attendance</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Today's Attendance</h3>
         <table>
             <thead>
                 <tr>
@@ -78,8 +23,8 @@
                 {% for record in attendance_today %}
                 <tr>
                     <td>{{ record.staff.first_name }} {{ record.staff.surname }}</td>
-                    <td>{{ record.sign_in_time }}</td>
-                    <td>{{ record.sign_out_time }}</td>
+                    <td>{{ record.check_in }}</td>
+                    <td>{{ record.check_out }}</td>
                     <td>{{ record.hours_worked }}</td>
                     <td>{{ record.is_late }}</td>
                     <td>{{ record.left_early }}</td>
@@ -91,6 +36,17 @@
                 {% endfor %}
             </tbody>
         </table>
+      </div>
+
+      <div class="card">
+        <h3>Task Summary</h3>
+        <ul>
+          <li>Total tasks: {{ total_tasks }}</li>
+          <li>Pending: {{ pending_tasks }}</li>
+          <li>In progress: {{ in_progress_tasks }}</li>
+          <li>Completed: {{ completed_tasks }}</li>
+        </ul>
+      </div>
     </div>
-</body>
-</html>
+  </section>
+{% endblock %}
