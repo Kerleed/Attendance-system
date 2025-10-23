@@ -1,0 +1,14 @@
+<table border="1">
+  <tr>
+    <th>Staff</th>
+    <th>Total Hours Worked</th>
+    <th>Total Days Attended</th>
+  </tr>
+  {% for staff in staff_summary %}
+  <tr>
+    <td>{{ staff.staff__first_name }} {{ staff.staff__surname }}</td>
+    <td>{{ staff.total_hours }}</td>
+    <td>{{ staff.total_days }}</td>
+  </tr>
+  {% endfor %}
+</table>

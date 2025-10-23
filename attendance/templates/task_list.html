@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Tasks</title>
+</head>
+<body>
+    <h1>📋 All Tasks</h1>
+
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong> - 
+            Assigned to: {{ task.staff.first_name }} {{ task.staff.surname }} <br>
+            Status: {{ task.status }} <br>
+            Date: {{ task.date_assigned }} <br><br>
+        </li>
+        {% empty %}
+        <li>No tasks assigned yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

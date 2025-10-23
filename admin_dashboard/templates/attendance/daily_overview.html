@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Attendance Overview</title>
+</head>
+<body>
+    <h1>Attendance for {{ today }}</h1>
+
+    <table border="1">
+        <tr>
+            <th>Staff</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Hours Worked</th>
+            <th>Late</th>
+            <th>Left Early</th>
+        </tr>
+
+        {% for item in overview %}
+        <tr>
+            <td>{{ item.staff.first_name }} {{ item.staff.surname }}</td>
+            <td>{{ item.staff.department }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.check_in|default:"—" }}</td>
+            <td>{{ item.check_out|default:"—" }}</td>
+            <td>{{ item.hours|default:"—" }}</td>
+            <td>{% if item.late %}✅{% else %}❌{% endif %}</td>
+            <td>{% if item.early %}✅{% else %}❌{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
